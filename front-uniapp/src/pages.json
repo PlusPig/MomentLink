@@ -1,0 +1,155 @@
+{
+	"pages": [
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/register/register",
+			"style": {
+				"navigationBarTitleText": "注册",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/publish/publish",
+			"style": {
+				"navigationBarTitleText": "发布",
+				"navigationBarBackgroundColor": "#020617",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/detail/detail",
+			"style": {
+				"navigationBarTitleText": "内容详情",
+				"navigationBarBackgroundColor": "white",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/friend/list",
+			"style": {
+				"navigationBarTitleText": "好友",
+				"navigationBarBackgroundColor": "#F9FAFB",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/friend/detail",
+			"style": {
+				"navigationBarTitleText": "好友详情",
+				"navigationBarBackgroundColor": "#F9FAFB",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/notification/list",
+			"style": {
+				"navigationBarTitleText": "通知",
+				"navigationBarBackgroundColor": "#FFFFFF",
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/notification/detail",
+			"style": {
+				"navigationBarTitleText": "好友申请",
+				"navigationBarBackgroundColor": "#F3F4F6",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/profile/index",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationBarBackgroundColor": "#F9FAFB",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/profile/edit",
+			"style": {
+				"navigationBarTitleText": "编辑资料",
+				"navigationBarBackgroundColor": "#F9FAFB",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/profile/password",
+			"style": {
+				"navigationBarTitleText": "修改密码",
+				"navigationBarBackgroundColor": "#F9FAFB",
+				"navigationBarTextStyle": "black"
+			}
+		},
+		{
+			"path": "pages/profile/content",
+			"style": {
+				"navigationBarTitleText": "我的动态",
+				"navigationBarBackgroundColor": "#ffffff",
+				"navigationBarTextStyle": "black",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/profile/content-edit",
+			"style": {
+				"navigationBarTitleText": "编辑动态",
+				"navigationBarBackgroundColor": "#F9FAFB",
+				"navigationBarTextStyle": "black"
+			}
+		}
+	],
+
+
+	"tabBar": {
+		"color": "#9CA3AF",
+		"selectedColor": "#111827",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "static/tabbar/shouye.png",
+				"selectedIconPath": "static/tabbar/shouye-active.png"
+			},
+			{
+				"pagePath": "pages/friend/list",
+				"text": "好友",
+				"iconPath": "static/tabbar/friends.png",
+				"selectedIconPath": "static/tabbar/friends-active.png"
+			},
+		{
+			"pagePath": "pages/notification/list",
+			"text": "通知",
+			"iconPath": "static/tabbar/tongzhi.png",
+			"selectedIconPath": "static/tabbar/tongzhi-active.png"
+		},
+		{
+			"pagePath": "pages/profile/index",
+			"text": "我的",
+			"iconPath": "static/tabbar/my.png",
+			"selectedIconPath": "static/tabbar/my-active.png"
+		}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}
