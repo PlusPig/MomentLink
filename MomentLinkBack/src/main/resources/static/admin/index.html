@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>数据大屏 - MomentLink 管理后台</title>
+    <!-- Tabler CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/css/tabler.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/css/tabler-flags.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/css/tabler-payments.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/css/tabler-vendors.min.css" rel="stylesheet"/>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        body {
+            background-color: #f5f7fb;
+        }
+        .stat-card {
+            transition: transform 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <!-- 导航栏 -->
+        <header class="navbar navbar-expand-md navbar-light d-print-none">
+            <div class="container-xl">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                    <a href="index.html">MomentLink 管理后台</a>
+                </h1>
+                <div class="navbar-nav flex-row order-md-last">
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown">
+                            <span class="avatar avatar-sm" style="background-image: url(https://cdn.jsdelivr.net/npm/@tabler/icons@latest/icons/user.svg)"></span>
+                            <div class="d-none d-xl-block ps-2">
+                                <div>管理员</div>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                            <a href="#" class="dropdown-item" onclick="logout()">退出登录</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <div class="d-flex flex-column flex-md-row flex-fill align-items-stretch align-items-md-center">
+                        <ul class="navbar-nav">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="index.html">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12l0 10" /><path d="M19 12l0 10" /><path d="M9 12l0 10" /><path d="M15 12l0 10" /></svg>
+                                    </span>
+                                    <span class="nav-link-title">数据大屏</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="users.html">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
+                                    </span>
+                                    <span class="nav-link-title">用户管理</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="contents.html">
+                                    <span class="nav-link-icon d-md-none d-lg-inline-block">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14 3v4a1 1 0 0 0 1 1h4" /><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z" /><path d="M9 9l1 0" /><path d="M9 13l6 0" /><path d="M9 17l6 0" /></svg>
+                                    </span>
+                                    <span class="nav-link-title">内容管理</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 页面内容 -->
+        <div class="page-wrapper">
+            <div class="page-header d-print-none">
+                <div class="container-xl">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <h2 class="page-title">数据大屏</h2>
+                            <div class="text-muted mt-1">平台数据统计分析</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page-body">
+                <div class="container-xl">
+                    <!-- 统计卡片 -->
+                    <div class="row row-cards mb-3" id="statsCards">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="card stat-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="subheader">总用户数</div>
+                                    </div>
+                                    <div class="h1 mb-3" id="totalUsers">-</div>
+                                    <div class="d-flex mb-2">
+                                        <div>活跃用户（7天）</div>
+                                        <div class="ms-auto" id="activeUsers">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="card stat-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="subheader">总内容数</div>
+                                    </div>
+                                    <div class="h1 mb-3" id="totalContents">-</div>
+                                    <div class="d-flex mb-2">
+                                        <div>今日新增</div>
+                                        <div class="ms-auto" id="todayContents">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="card stat-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="subheader">总评论数</div>
+                                    </div>
+                                    <div class="h1 mb-3" id="totalComments">-</div>
+                                    <div class="d-flex mb-2">
+                                        <div>总点赞数</div>
+                                        <div class="ms-auto" id="totalLikes">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="card stat-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center">
+                                        <div class="subheader">平均评分</div>
+                                    </div>
+                                    <div class="h1 mb-3" id="avgRating">-</div>
+                                    <div class="d-flex mb-2">
+                                        <div>评分统计</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 图表区域 -->
+                    <div class="row row-cards">
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">活跃用户统计（近7天）</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="chart-container">
+                                        <canvas id="activeUsersChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">热门内容排行</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div id="hotContentsList">
+                                        <div class="text-center text-muted py-4">加载中...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabler JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta20/dist/js/tabler.min.js"></script>
+    <script src="admin.js"></script>
+    <script>
+        let activeUsersChart = null;
+
+        // 加载统计数据
+        async function loadStats() {
+            try {
+                // 加载总体统计
+                const overview = await StatsAPI.getOverview();
+                if (overview) {
+                    document.getElementById('totalUsers').textContent = formatNumber(overview.totalUsers);
+                    document.getElementById('activeUsers').textContent = formatNumber(overview.activeUsers);
+                    document.getElementById('totalContents').textContent = formatNumber(overview.totalContents);
+                    document.getElementById('todayContents').textContent = formatNumber(overview.todayContents);
+                    document.getElementById('totalComments').textContent = formatNumber(overview.totalComments);
+                    document.getElementById('totalLikes').textContent = formatNumber(overview.totalLikes);
+                    document.getElementById('avgRating').textContent = overview.avgRating ? overview.avgRating.toFixed(1) : '0.0';
+                }
+
+                // 加载活跃用户统计
+                const activeUsers = await StatsAPI.getActiveUsers(7);
+                if (activeUsers && activeUsersChart) {
+                    updateActiveUsersChart(activeUsers);
+                } else if (activeUsersChart) {
+                    // 如果返回null或空数据，显示提示
+                    document.getElementById('activeUsersChart').parentElement.innerHTML = 
+                        '<div class="text-center text-muted py-4">暂无数据</div>';
+                }
+
+                // 加载热门内容（只显示前3条）
+                const hotContents = await StatsAPI.getHotContents(3);
+                if (hotContents) {
+                    displayHotContents(hotContents);
+                } else {
+                    displayHotContents([]);
+                }
+            } catch (error) {
+                console.error('加载统计数据失败:', error);
+                showToast('加载统计数据失败', 'error');
+            }
+        }
+
+        // 初始化活跃用户图表
+        function initActiveUsersChart() {
+            const ctx = document.getElementById('activeUsersChart');
+            if (!ctx) return;
+
+            activeUsersChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: '活跃用户数',
+                        data: [],
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // 更新活跃用户图表
+        function updateActiveUsersChart(data) {
+            if (!activeUsersChart || !data) return;
+            
+            // 处理不同的数据格式
+            if (Array.isArray(data) && data.length > 0) {
+                // 优先使用 day 字段（MM/dd格式），如果没有则使用 date
+                const labels = data.map(item => item.day || item.date || item.label || '');
+                const values = data.map(item => item.count || item.value || item.activeUsers || 0);
+                activeUsersChart.data.labels = labels;
+                activeUsersChart.data.datasets[0].data = values;
+                activeUsersChart.update();
+            } else if (typeof data === 'object' && data.labels && data.values) {
+                activeUsersChart.data.labels = data.labels;
+                activeUsersChart.data.datasets[0].data = data.values;
+                activeUsersChart.update();
+            } else {
+                // 数据格式不匹配，显示提示
+                document.getElementById('activeUsersChart').parentElement.innerHTML = 
+                    '<div class="text-center text-muted py-4">暂无数据</div>';
+            }
+        }
+
+        // 显示热门内容（只显示前3条）
+        function displayHotContents(contents) {
+            const container = document.getElementById('hotContentsList');
+            if (!contents || !Array.isArray(contents) || contents.length === 0) {
+                container.innerHTML = '<div class="text-center text-muted py-4">暂无数据</div>';
+                return;
+            }
+
+            // 只显示前3条
+            const displayContents = contents.slice(0, 3);
+
+            let html = '<div class="table-responsive"><table class="table table-vcenter">';
+            html += '<thead><tr><th>排名</th><th>内容</th><th>作者</th><th>点赞数</th><th>评论数</th></tr></thead><tbody>';
+            
+            displayContents.forEach((content, index) => {
+                html += `<tr>
+                    <td>${index + 1}</td>
+                    <td>${content.contentText ? (content.contentText.substring(0, 30) + (content.contentText.length > 30 ? '...' : '')) : '-'}</td>
+                    <td>${content.nickname || content.username || '-'}</td>
+                    <td>${formatNumber(content.likeCount || 0)}</td>
+                    <td>${formatNumber(content.commentCount || 0)}</td>
+                </tr>`;
+            });
+            
+            html += '</tbody></table></div>';
+            container.innerHTML = html;
+        }
+
+        // 页面加载时初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            initActiveUsersChart();
+            loadStats();
+            
+            // 每30秒刷新一次数据
+            setInterval(loadStats, 30000);
+        });
+    </script>
+</body>
+</html>
+
